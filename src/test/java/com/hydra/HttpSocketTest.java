@@ -15,7 +15,7 @@ import org.junit.Test;
 
 public class HttpSocketTest {
 	
-	@Test
+	@Ignore
 	public void shouldListenToSocket() throws Exception {
 		ServerSocket listener = new ServerSocket(33000);
 		Socket client = new Socket(InetAddress.getLocalHost(),33000);
