@@ -17,7 +17,7 @@
                     <forceCreation>true</forceCreation>
                     <archive>
                         <manifest>
-                            <mainClass>com.ericsmith.Server</mainClass>
+                            <mainClass>com.hydra.Server</mainClass>
                         </manifest>
                     </archive>
                     <outputDirectory>jars</outputDirectory>
