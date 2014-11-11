@@ -2,7 +2,9 @@ package com.hydra;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,13 +17,18 @@ public class HttpSocketTest {
 	
 	@Test
 	public void shouldListenToSocket() throws Exception {
-		ServerSocket listener = new ServerSocket(5000);
-		Socket client = new Socket(InetAddress.getLocalHost(),5000);
+		ServerSocket listener = new ServerSocket(33000);
+		Socket client = new Socket(InetAddress.getLocalHost(),33000);
 		Socket socket = listener.accept();
 
-		assertTrue(client.isConnected());
+		HttpSocket http = new HttpSocket(socket);
+		BufferedWriter outStream = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		
-//		socket.close();
+		outStream.write("Test Data");
+		
+		assertEquals("Test Data", http.readInput());
+		
+		socket.close();
 	}
 
 }

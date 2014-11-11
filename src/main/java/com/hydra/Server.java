@@ -23,21 +23,11 @@ public class Server implements Runnable {
 	public void run() {
 
 		try {
-
-			// HttpSocketAPI http = new HttpSocket(socket);
-
-			// String request = http.readInput();
-
-			// BufferedReader input = new BufferedReader(new InputStreamReader(
-			// socket.getInputStream()));
-
-			BufferedWriter output = new BufferedWriter(new OutputStreamWriter(
-					socket.getOutputStream()));
-
+			HttpSocketAPI http = new HttpSocket(socket);
+			String request = http.readInput();
 			Thread.sleep(1000);
-			output.write("HTTP/1.0 404 Not Found\r\n\r\nNothing here");
-			output.flush();
-			output.close();
+			http.writeOutput("HTTP/1.0 404 Not Found\r\n\r\nNothing here\r\n" + request);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

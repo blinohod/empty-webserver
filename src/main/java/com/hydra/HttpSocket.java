@@ -38,6 +38,8 @@ public class HttpSocket implements HttpSocketAPI {
 	@Override
 	public void writeOutput(String buffer) throws IOException {
 		output.write(buffer);
+		output.flush();
+		output.close();
 	}
 
 }
