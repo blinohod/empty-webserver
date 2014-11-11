@@ -1,11 +1,11 @@
 package com.hydra;
 
+import java.io.BufferedReader;
+
 public class Request {
 
 	private String method;
 	
-
-
 	public Request(String inputString) {
 		String[] parts = new String[1024];
 		

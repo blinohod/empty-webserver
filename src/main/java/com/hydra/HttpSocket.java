@@ -22,11 +22,7 @@ public class HttpSocket {
 			ServerSocket listener = new ServerSocket(this.port);
 			socket = listener.accept();
 
-			/*input = new BufferedReader(new InputStreamReader(
-					socket.getInputStream()));
-			
-			output = new BufferedWriter(new OutputStreamWriter(
-					socket.getOutputStream()));
+			/*i
 */
 		} catch (IOException e) {
 
