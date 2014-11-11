@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 
 public class Request {
 
-	private String method;
+	private String method;	
 	
-	public Request(String inputString) {
+	public void parse(String inputString) {
 		String[] parts = new String[1024];
 		
 		parts = inputString.split("\r\n\r\n", 2);

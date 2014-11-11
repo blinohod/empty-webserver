@@ -5,33 +5,39 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 
-public class HttpSocket {
+public class HttpSocket implements HttpSocketAPI {
 
-	private int port;
 	private Socket socket;
 	private BufferedReader input;
 	private BufferedWriter output;
 
-	public HttpSocket(int port) {
-		this.port = port;
-
+	public HttpSocket(Socket socket) {
+		this.socket = socket;
 		try {
-			ServerSocket listener = new ServerSocket(this.port);
-			socket = listener.accept();
-
-			/*i
-*/
+			this.input = new BufferedReader(new InputStreamReader(
+					socket.getInputStream()));
+			this.output = new BufferedWriter(new OutputStreamWriter(
+					socket.getOutputStream()));
 		} catch (IOException e) {
-
 			e.printStackTrace();
 		}
+
 	}
-	
-	public void close() throws IOException {
-		socket.close();
+
+	@Override
+	public String readInput() throws IOException {
+		String buffer = "";
+		do {
+			buffer = buffer + input.readLine();
+		} while (input.ready());
+		return buffer;
+	}
+
+	@Override
+	public void writeOutput(String buffer) throws IOException {
+		output.write(buffer);
 	}
 
 }

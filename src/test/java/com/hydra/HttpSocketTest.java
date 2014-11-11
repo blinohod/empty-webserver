@@ -4,27 +4,24 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class ServerTest {
-
-	@Test
-	public void fakeTest() {
-		assertTrue(true);
-		
-	}
+public class HttpSocketTest {
 	
-	@Ignore
+	@Test
 	public void shouldListenToSocket() throws Exception {
-		HttpSocket socket = new HttpSocket(5000);
+		ServerSocket listener = new ServerSocket(5000);
 		Socket client = new Socket(InetAddress.getLocalHost(),5000);
+		Socket socket = listener.accept();
+
 		assertTrue(client.isConnected());
 		
-		socket.close();
+//		socket.close();
 	}
 
 }
