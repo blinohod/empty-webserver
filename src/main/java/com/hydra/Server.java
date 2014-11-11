@@ -25,32 +25,31 @@ public class Server {
 
 	public static void main(String[] args) throws IOException, Exception {
 
-		/*String publicDir = System.getenv("PUBLIC_DIR");
-		if (publicDir == null) {
-			System.out.println("Please define PUBLIC_DIR env variable");
-			System.exit(1);
-		} */
+		/*
+		 * String publicDir = System.getenv("PUBLIC_DIR"); if (publicDir ==
+		 * null) { System.out.println("Please define PUBLIC_DIR env variable");
+		 * System.exit(1); }
+		 */
 
 		// API to request processing
 		// HandlerAPI handler = new Handler(publicDir);
 
 		ServerSocket listener = new ServerSocket(LISTEN_PORT);
-		
-			Socket connection = listener.accept();
-			if (connection.isConnected()) {
-				BufferedReader input = new BufferedReader(new InputStreamReader(
-						connection.getInputStream()));
-				
-				BufferedWriter output = new BufferedWriter(new OutputStreamWriter(
-						connection.getOutputStream()));
-		
-				Thread.sleep(1000);
-				output.write("HTTP/1.0 404 Not Found\r\n\r\nNothing here");
-				output.flush();
-				output.close();
-			}
 
-		
+		Socket connection = listener.accept();
+		if (connection.isConnected()) {
+			BufferedReader input = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+
+			BufferedWriter output = new BufferedWriter(new OutputStreamWriter(
+					connection.getOutputStream()));
+
+			Thread.sleep(1000);
+			output.write("HTTP/1.0 404 Not Found\r\n\r\nNothing here");
+			output.flush();
+			output.close();
+		}
+
 		// System.out.println("Accepted");
 		// socket.close();
 		// listener.close();
