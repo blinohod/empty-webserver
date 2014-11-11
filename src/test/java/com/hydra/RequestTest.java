@@ -16,13 +16,21 @@ public class RequestTest {
 	}
 
 	@Test
-	public void shouldParseGetMethod() {
+	public void shouldFetchMethod() {
 		request.parse("GET /some/path?param=value HTTP/1.0\r\n"
 				+ "Host: test.com\r\n"
-				+ "Accept: text/plain\r\n"
 				+ "\r\n");
 		assertEquals("GET", request.getMethod());
 	}
+	
+	@Test
+	public void shouldFetchPath() {
+		request.parse("GET /some/path?param=value HTTP/1.0\r\n"
+				+ "Host: test.com\r\n"
+				+ "\r\n");
+		assertEquals("/some/path", request.getPath());
+	}
+	
 
 	@Test
 	public void shouldParsePostMethod() {

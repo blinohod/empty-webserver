@@ -5,11 +5,23 @@ import java.io.BufferedReader;
 public class Request {
 
 	private String method;	
+	private String path;
 	
-	public void parse(String inputString) {
-		String[] parts = new String[1024];
+	public void parse(String rawRequest) {
+
+		String buffer = rawRequest;
+		String[] parts;
+
+		// Parse 1st line (method, url, query string, http version)
+		parts = buffer.split(" ", 2);
+		this.method = parts[0];
+		buffer = parts[1];
 		
-		parts = inputString.split("\r\n\r\n", 2);
+		parts = buffer.split("\\?", 2);
+		this.path = parts[0];
+		
+		/*
+		parts = rawRequest.split("\r\n\r\n", 2);
 		String requestHeader = parts[0];
 		String requestBody = parts[1];
 		
@@ -19,14 +31,15 @@ public class Request {
 		
 		parts = requestLine.split("\\s+");
 		this.method = parts[0];
+		*/
 	}
 
 	public Object getMethod() {
 		return method;
 	}
 
-	public void setMethod(String method) {
-		this.method = method;
+	public Object getPath() {
+		return path;
 	}
 	
 }
