@@ -1,7 +1,5 @@
 package com.hydra;
 
-import java.io.BufferedReader;
-
 public class Request {
 
 	private String rawRequest; // original request as a string
