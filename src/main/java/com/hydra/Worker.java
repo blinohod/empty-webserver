@@ -4,17 +4,17 @@ import java.net.Socket;
 
 public class Worker implements Runnable {
 
-	private Socket socket;
+	private HttpSocketAPI http;
 
-	public Worker(Socket socket) {
-		this.socket = socket;
+	public Worker(HttpSocketAPI http) {
+		this.http = http;
 	}
 
 	@Override
 	public void run() {
 
 		try {
-			HttpSocketAPI http = new HttpSocket(socket);
+			
 			String request = http.readInput();
 			Thread.sleep(1000);
 			http.writeOutput("HTTP/1.0 404 Not Found\r\n\r\nNothing here\r\n"

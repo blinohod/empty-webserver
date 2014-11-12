@@ -21,7 +21,8 @@ public class Server {
 		while (true) {
 			Socket socket = listener.accept();
 			if (socket.isConnected()) {
-				Worker worker = new Worker(socket);
+				HttpSocketAPI http = new HttpSocket(socket);
+				Worker worker = new Worker(http);
 				new Thread(worker).start();
 			}
 		}
