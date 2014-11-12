@@ -1,7 +1,5 @@
 package com.hydra;
 
-import java.net.Socket;
-
 public class Worker implements Runnable {
 
 	private HttpSocketAPI http;
