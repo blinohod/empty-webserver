@@ -23,7 +23,10 @@ public class Server {
 			if (socket.isConnected()) {
 				HttpSocketAPI http = new HttpSocket(socket);
 				Worker worker = new Worker(http);
+
 				new Thread(worker).start();
+
+
 			}
 		}
 		
