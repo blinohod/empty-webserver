@@ -11,6 +11,13 @@ public class Request {
 	private String method;	
 	private String path;
 	private String queryString;
+
+    public Request() {
+        this.rawRequest = "GET / HTTP/1.0\r\n"
+                + "Host: localhost\r\n" + "\r\n";
+        this.splitRawRequest();
+        this.splitRequestLine();
+    }
 	
 	public Request(String rawRequest) {
 		this.rawRequest = rawRequest;
