@@ -4,41 +4,34 @@ import java.io.BufferedReader;
 
 public class Request {
 
+	private String rawRequest; // original request as a string
+	
+	private String requestLine;
+	private String rawHeader;
+	private String rawBody;
+	
 	private String method;	
 	private String path;
 	private String queryString;
 	
-	public void parse(String rawRequest) {
-
-		String buffer = rawRequest;
-		String[] parts;
-
-		// Parse 1st line (method, url, query string, http version)
-		parts = buffer.split(" ", 2);
-		this.method = parts[0];
-		buffer = parts[1];
-		
-		parts = buffer.split("\\?", 2);
-		this.path = parts[0];
-		buffer = parts[1];
-		
-		parts = buffer.split(" ");
-		queryString = parts[0];
-		
-		/*
-		parts = rawRequest.split("\r\n\r\n", 2);
-		String requestHeader = parts[0];
-		String requestBody = parts[1];
-		
-		parts = requestHeader.split("\r\n", 2);
-		String requestLine = parts[0];
-		String requestHeaders = parts[1];
-		
-		parts = requestLine.split("\\s+");
-		this.method = parts[0];
-		*/
+	public Request(String rawRequest) {
+		this.rawRequest = rawRequest;
+		this.splitRawRequest();
+		this.splitRequestLine();
 	}
-
+	
+	public String getRequestLine() {
+		return requestLine;
+	}
+	
+	public String getRawHeader() {
+		return rawHeader;
+	}
+	
+	public String getRawBody() {
+		return rawBody;
+	}
+	
 	public Object getMethod() {
 		return method;
 	}
@@ -51,4 +44,29 @@ public class Request {
 		return queryString;
 	}
 	
+	private void splitRawRequest() {
+		String[] parts = rawRequest.split("\r\n\r\n", 2);
+		rawBody = parts[1];
+		String buffer = parts[0];
+		
+		parts = buffer.split("\r\n", 2);
+		requestLine = parts[0];
+		rawHeader = parts[1];
+
+	}
+	
+	private void splitRequestLine() {
+		String[] parts = requestLine.split(" ", 3);
+		method = parts[0];
+		String buffer = parts[1];
+		
+		parts = buffer.split("\\?", 2);
+		this.path = parts[0];
+		buffer = parts[1];
+		
+		parts = buffer.split(" ");
+		queryString = parts[0];
+	}
+
+
 }
