@@ -7,14 +7,15 @@ import java.net.Socket;
 public class Server {
 
 	private static int LISTEN_PORT = 5000;
+	private static String DEFAULT_PUBLIC_DIR = "/tmp";
 
 	public static void main(String[] args) throws IOException, Exception {
 
-		/*
-		 * String publicDir = System.getenv("PUBLIC_DIR"); if (publicDir ==
-		 * null) { System.out.println("Please define PUBLIC_DIR env variable");
-		 * System.exit(1); }
-		 */
+		String publicDir = System.getenv("PUBLIC_DIR");
+		if (publicDir == null) {
+			publicDir = DEFAULT_PUBLIC_DIR;
+			System.out.println("Warning: PUBLIC_DIR is not defined.");
+		}
 
 		ServerSocket listener = new ServerSocket(LISTEN_PORT);
 
@@ -26,6 +27,6 @@ public class Server {
 				new Thread(worker).start();
 			}
 		}
-		
+
 	}
 }
