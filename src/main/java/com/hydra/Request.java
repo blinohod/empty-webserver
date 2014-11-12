@@ -56,13 +56,14 @@ public class Request {
 	}
 	
 	private void splitRequestLine() {
-		String[] parts = requestLine.split(" ", 3);
+		String[]parts = requestLine.split(" ", 3);
 		method = parts[0];
 		String buffer = parts[1];
 		
 		parts = buffer.split("\\?", 2);
-		this.path = parts[0];
-		buffer = parts[1];
+		path = parts[0];
+		if (parts.length == 2)
+			buffer = parts[1];
 		
 		parts = buffer.split(" ");
 		queryString = parts[0];

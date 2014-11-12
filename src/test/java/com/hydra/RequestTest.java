@@ -28,7 +28,7 @@ public class RequestTest {
 
 	@Test
 	public void shouldFetchPath() {
-		Request request = new Request("GET /some/path?param=value HTTP/1.0\r\n"
+		Request request = new Request("GET /some/path HTTP/1.0\r\n"
 				+ "Host: test.com\r\n" + "\r\n");
 		assertEquals("/some/path", request.getPath());
 	}
