@@ -6,6 +6,7 @@ public class Request {
 
 	private String method;	
 	private String path;
+	private String queryString;
 	
 	public void parse(String rawRequest) {
 
@@ -19,6 +20,10 @@ public class Request {
 		
 		parts = buffer.split("\\?", 2);
 		this.path = parts[0];
+		buffer = parts[1];
+		
+		parts = buffer.split(" ");
+		queryString = parts[0];
 		
 		/*
 		parts = rawRequest.split("\r\n\r\n", 2);
@@ -40,6 +45,10 @@ public class Request {
 
 	public Object getPath() {
 		return path;
+	}
+
+	public Object getQueryString() {
+		return queryString;
 	}
 	
 }
