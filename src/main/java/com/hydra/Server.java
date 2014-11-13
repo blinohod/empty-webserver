@@ -1,6 +1,5 @@
 package com.hydra;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -9,7 +8,7 @@ public class Server {
 	private static int LISTEN_PORT = 5000;
 	private static String DEFAULT_PUBLIC_DIR = "/tmp";
 
-	public static void main(String[] args) throws IOException, Exception {
+	public static void main(String[] args) {
 
 		String publicDir = System.getenv("PUBLIC_DIR");
 		if (publicDir == null) {
@@ -17,19 +16,21 @@ public class Server {
 			System.out.println("Warning: PUBLIC_DIR is not defined.");
 		}
 
-		ServerSocket listener = new ServerSocket(LISTEN_PORT);
-
-		while (true) {
-			Socket socket = listener.accept();
-			if (socket.isConnected()) {
-				HttpSocketAPI http = new HttpSocket(socket);
-				Worker worker = new Worker(http);
-
-				new Thread(worker).start();
-
-
+		HandlerAPI handler = new Handler(publicDir);
+		
+		ServerSocket listener;
+		try {
+			listener = new ServerSocket(LISTEN_PORT);
+			while (true) {
+				Socket socket = listener.accept();
+				if (socket.isConnected()) {
+					HttpSocketAPI http = new HttpSocket(socket);
+					Worker worker = new Worker(http, handler);
+					new Thread(worker).start();
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 }

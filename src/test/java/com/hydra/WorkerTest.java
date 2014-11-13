@@ -27,9 +27,11 @@ public class WorkerTest {
         Socket socket = listener.accept();
 
         HttpSocket http = new HttpSocket(socket);
-        Worker worker = new Worker(http);
+        Worker worker = new Worker(http, new Handler("/tmp"));
 
         assertFalse(worker.isPathAllowed("logs"));
 
     }
+    
+
 }

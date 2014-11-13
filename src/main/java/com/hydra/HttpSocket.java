@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.nio.CharBuffer;
 
 public class HttpSocket implements HttpSocketAPI {
 
@@ -28,11 +29,9 @@ public class HttpSocket implements HttpSocketAPI {
 
 	@Override
 	public String readInput() throws IOException {
-		String buffer = "";
-		do {
-			buffer = buffer + input.readLine();
-		} while (input.ready());
-		return buffer;
+		CharBuffer buffer = CharBuffer.allocate(1024*1024);
+		int length = input.read(buffer);
+		return buffer.toString();
 	}
 
 	@Override
@@ -40,6 +39,12 @@ public class HttpSocket implements HttpSocketAPI {
 		output.write(buffer);
 		output.flush();
 		output.close();
+	}
+
+	@Override
+	public String readRequestLine() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

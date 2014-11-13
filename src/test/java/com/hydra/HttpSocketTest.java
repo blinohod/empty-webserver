@@ -15,7 +15,7 @@ import org.junit.Test;
 
 public class HttpSocketTest {
 	
-	@Ignore
+	@Test
 	public void shouldListenToSocket() throws Exception {
 		ServerSocket listener = new ServerSocket(33000);
 		Socket client = new Socket(InetAddress.getLocalHost(),33000);
@@ -29,6 +29,7 @@ public class HttpSocketTest {
 		assertEquals("Test Data", http.readInput());
 		
 		socket.close();
+		listener.close();
 	}
 
 }
