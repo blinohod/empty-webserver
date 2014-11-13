@@ -15,8 +15,6 @@ public class Server {
 			publicDir = DEFAULT_PUBLIC_DIR;
 			System.out.println("Warning: PUBLIC_DIR is not defined.");
 		}
-
-		HandlerAPI handler = new Handler(publicDir);
 		
 		ServerSocket listener;
 		try {
@@ -25,7 +23,7 @@ public class Server {
 				Socket socket = listener.accept();
 				if (socket.isConnected()) {
 					HttpSocketAPI http = new HttpSocket(socket);
-					Worker worker = new Worker(http, handler);
+					Worker worker = new Worker(http);
 					new Thread(worker).start();
 				}
 			}
