@@ -24,4 +24,9 @@ public class ResponseTest {
 		assertEquals("OK", res.getStatusMessage());
 	}
 
+	@Test
+	public void defaultStatusLineIs200OK() {
+		assertEquals("HTTP/1.0 200 OK", res.getStatusLine());
+	}
+
 }

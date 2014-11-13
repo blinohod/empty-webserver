@@ -49,4 +49,7 @@ public class Response {
 		this.headers.put(name, value);
 	}
 	
+	public String getStatusLine() {
+		return "HTTP/1.0 " + getStatus() + " " + getStatusMessage();
+	}
 }
