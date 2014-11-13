@@ -1,35 +1,20 @@
 package com.hydra;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class WorkerTest {
 
-    private Request request;
-
-    @Before
-    public void setup() {
-
-        request = new Request();
-
-    }
-
     @Test
-    public void testIsPathAllowed() throws Exception{
-        ServerSocket listener = new ServerSocket(33000);
-        Socket client = new Socket(InetAddress.getLocalHost(),33000);
-        Socket socket = listener.accept();
+    public void ItRoutesInputFromTheHttpSocketInputAndWritesItToTheOutput() {
+        MockHttpSocket mockHttpSocket = new MockHttpSocket();
+        mockHttpSocket.input = "The Input";
 
-        HttpSocket http = new HttpSocket(socket);
-        Worker worker = new Worker(http);
+        Worker worker = new Worker(mockHttpSocket);
+        worker.run();
 
-        assertFalse(worker.isPathAllowed("logs"));
-
+        assertEquals("HTTP/1.0 404 Not Found\r\n\r\nNoothing here\r\nThe Input",
+                mockHttpSocket.output);
     }
 }

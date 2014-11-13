@@ -11,24 +11,14 @@ public class Worker implements Runnable {
 	public void run() {
 
 		try {
-			
 			String request = http.readInput();
 			Thread.sleep(1000);
 
-            if(isPathAllowed(request)){
-                http.writeOutput("HTTP/1.0 404 Not Found\r\n\r\nNoothing here\r\n"
-                        + request);
-            } else {
-                http.writeOutput("HTTP/1.0 401 Unauthorized\r\n\r\nAuthentication required\r\n");
-            }
+            Router router = new Router();
+            http.writeOutput(router.route(request));
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-    public boolean isPathAllowed(String request) {
-        return !request.contains("logs");
-    }
-
 }
