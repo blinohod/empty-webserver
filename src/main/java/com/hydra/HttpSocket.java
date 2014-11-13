@@ -26,7 +26,6 @@ public class HttpSocket implements HttpSocketAPI {
 
 	}
 
-	@Override
 	public String readInput() throws IOException {
 		String buffer = "";
 		do {
@@ -35,7 +34,6 @@ public class HttpSocket implements HttpSocketAPI {
 		return buffer;
 	}
 
-	@Override
 	public void writeOutput(String buffer) throws IOException {
 		output.write(buffer);
 		output.flush();
