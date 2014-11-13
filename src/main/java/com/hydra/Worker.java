@@ -8,7 +8,6 @@ public class Worker implements Runnable {
 		this.http = http;
 	}
 
-	@Override
 	public void run() {
 
 		try {
