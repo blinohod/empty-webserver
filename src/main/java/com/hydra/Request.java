@@ -41,37 +41,42 @@ public class Request {
 		return method;
 	}
 
-	public Object getPath() {
+	public String getPath() {
 		return path;
 	}
 
-	public Object getQueryString() {
+	public String getQueryString() {
 		return queryString;
 	}
 	
 	private void splitRawRequest() {
-		String[] parts = rawRequest.split("\r\n\r\n", 2);
-		rawBody = parts[1];
+		String[] parts = rawRequest.split("\r\n\r\n");
+        if (parts.length > 1)
+            rawBody = parts[1];
 		String buffer = parts[0];
 		
-		parts = buffer.split("\r\n", 2);
-		requestLine = parts[0];
-		rawHeader = parts[1];
+		String[] parts2 = buffer.split("\r\n", 2);
+        requestLine = parts2[0];
+        if (parts2.length > 1)
+            rawHeader = parts2[1];
 
 	}
 	
 	private void splitRequestLine() {
-		String[]parts = requestLine.split(" ", 3);
+		String[] parts = requestLine.split(" ", 3);
 		method = parts[0];
-		String buffer = parts[1];
-		
-		parts = buffer.split("\\?", 2);
-		path = parts[0];
-		if (parts.length == 2)
-			buffer = parts[1];
-		
-		parts = buffer.split(" ");
-		queryString = parts[0];
+        if(parts.length > 1) {
+            String buffer = parts[1];
+
+            String[] bufferParts = buffer.split("\\?", 2);
+            path = bufferParts[0];
+
+            if (bufferParts.length == 2)
+                buffer = parts[1];
+
+            parts = buffer.split(" ");
+            queryString = parts[0];
+        }
 	}
 
 

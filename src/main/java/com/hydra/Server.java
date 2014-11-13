@@ -22,7 +22,7 @@ public class Server {
 		while (true) {
 			Socket socket = listener.accept();
 			if (socket.isConnected()) {
-				HttpSocketAPI http = new HttpSocket(socket);
+				HttpSocket http = new HttpSocket(socket);
 				Worker worker = new Worker(http);
 
 				new Thread(worker).start();

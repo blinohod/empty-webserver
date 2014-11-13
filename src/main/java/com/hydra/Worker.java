@@ -14,13 +14,20 @@ public class Worker implements Runnable {
 		try {
 			
 			String request = http.readInput();
+
 			Thread.sleep(1000);
 
-            if(isPathAllowed(request)){
-                http.writeOutput("HTTP/1.0 404 Not Found\r\n\r\nNoothing here\r\n"
+            Request req = new Request(request);
+
+            Response reponse = new Response(req);
+
+            if(isPathAllowed(req)){
+                http.writeOutput("HTTP/1.0 404 Not Found\r\n\r\nNothing here\r\n"
                         + request);
             } else {
-                http.writeOutput("HTTP/1.0 401 Unauthorized\r\n\r\nAuthentication required\r\n");
+                http.writeOutput("HTTP/1.0 401 Unauthorized\r\n\r\n" +
+//                        "Authentication required\r\n" + request +
+                        "WWW-Authenticate: Basic realm=\"empty_server\"\r\n");
             }
 
 		} catch (Exception e) {
@@ -28,8 +35,8 @@ public class Worker implements Runnable {
 		}
 	}
 
-    public boolean isPathAllowed(String request) {
-        return !request.contains("logs");
+    public boolean isPathAllowed(Request request) {
+        return !request.getPath().contains("logs");
     }
 
 }

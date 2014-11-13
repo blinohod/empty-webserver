@@ -3,33 +3,68 @@ package com.hydra;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-
 import static org.junit.Assert.*;
 
 public class WorkerTest {
 
     private Request request;
+    private MockHttpSocket http;
+    private Worker worker;
 
     @Before
     public void setup() {
 
         request = new Request();
+        http = new MockHttpSocket();
+        worker = new Worker(http);
 
     }
 
     @Test
-    public void testIsPathAllowed() throws Exception{
-        ServerSocket listener = new ServerSocket(33000);
-        Socket client = new Socket(InetAddress.getLocalHost(),33000);
-        Socket socket = listener.accept();
+    public void testIsPathAllowedLogs() throws Exception {
 
-        HttpSocket http = new HttpSocket(socket);
-        Worker worker = new Worker(http);
+        Request requestLogs = new Request("GET /logs HTTP/1.0\r\n"
+                + "Host: test.com\r\n" + "\r\n");
 
-        assertFalse(worker.isPathAllowed("logs"));
+        assertFalse(worker.isPathAllowed(requestLogs));
+    }
+
+    @Test
+    public void testIsPathAllowedOther() throws Exception{
+
+        Request requestOther = new Request("GET /other HTTP/1.0\r\n"
+                + "Host: test.com\r\n" + "\r\n");
+
+        assertTrue(worker.isPathAllowed(requestOther));
 
     }
+
+    @Test
+    public void checkCredsTestPassingCorrectCreds() {
+
+        Request requestLogsWithCreds = new Request("GET /logs?username=admin&password=hunter2 HTTP/1.0\r\n"
+                + "Host: test.com\r\n" + "\r\n");
+//        assertTrue(worker.checkCreds(requestLogsWithCreds));
+
+    }
+
+    @Test
+    public void checkCredsTestPassingNoCreds() {
+        Request requestLogs = new Request("GET /logs HTTP/1.0\r\n"
+                + "Host: test.com\r\n" + "\r\n");
+//        assertFalse(worker.checkCreds(requestLogs));
+
+    }
+
+    @Test
+    public void checkCredsTestPassingBadCreds() {
+        Request requestLogs = new Request("GET /logs?username=user&password=ppppdpddp HTTP/1.0\r\n"
+                + "Host: test.com\r\n" + "\r\n");
+
+//        assertFalse(worker.checkCreds(requestLogs));
+
+    }
+
+
+
 }
