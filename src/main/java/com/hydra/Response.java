@@ -8,12 +8,13 @@ public class Response {
 	private int status;
 	private String statusMessage;
 	private Map<String,String> headers; 
-	private ByteBuffer body;
+	private String body;
 	
 	public Response() {
 		// Set defaults
 		this.status = 200;
 		this.statusMessage = "OK";
+		
 	}
 	
 	public int getStatus() {
@@ -34,22 +35,24 @@ public class Response {
 	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
 	}
-	public ByteBuffer getBody() {
+	public String getBody() {
 		return body;
 	}
-	public void setBody(ByteBuffer body) {
+	public void setBody(String body) {
 		this.body = body;
 	}
-	
-	public void setBody(String body) {
-		this.body.put(body.getBytes());
-	}
-	
+		
 	public void setHeader(String name, String value) {
 		this.headers.put(name, value);
 	}
 	
 	public String getStatusLine() {
 		return "HTTP/1.0 " + getStatus() + " " + getStatusMessage();
+	}
+	
+	public ByteBuffer toByteBuffer() {
+		String res = getStatusLine() + "\r\n\r\n" + getBody();
+		ByteBuffer buf = ByteBuffer.wrap(res.getBytes());
+		return buf;
 	}
 }
