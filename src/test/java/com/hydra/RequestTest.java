@@ -1,8 +1,8 @@
 package com.hydra;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class RequestTest {
 	
@@ -36,7 +36,7 @@ public class RequestTest {
 	@Test
 	public void shouldFetchQueryString() {
 		Request request = new Request("GET /some/path?param=value&another=some+thing HTTP/1.0\r\n"
-				+ "Host: test.com\r\n" + "\r\n");
+				+ "Host: test.com");
 		assertEquals("param=value&another=some+thing", request.getQueryString());
 	}
 

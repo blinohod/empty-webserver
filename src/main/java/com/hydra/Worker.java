@@ -12,7 +12,6 @@ public class Worker implements Runnable {
 
         try {
             String request = http.readInput();
-            Thread.sleep(1000);
 
             Router router = new Router();
             http.writeOutput(router.route(request));

@@ -14,7 +14,6 @@ public class WorkerTest {
         Worker worker = new Worker(mockHttpSocket);
         worker.run();
 
-        assertEquals("HTTP/1.0 404 Not Found\r\n\r\nNoothing here\r\nThe Input",
-                mockHttpSocket.output);
+        assertEquals(mockHttpSocket.output, "HTTP/1.1 404 Not Found\r\n\r\nOoops there is nothing here :(\r\nThe Input");
     }
 }

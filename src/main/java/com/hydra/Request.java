@@ -72,10 +72,9 @@ public class Request {
             path = bufferParts[0];
 
             if (bufferParts.length == 2)
-                buffer = parts[1];
+                buffer = bufferParts[1];
 
-            parts = buffer.split(" ");
-            queryString = parts[0];
+            queryString = buffer.split(" ")[0];
         }
 	}
 
