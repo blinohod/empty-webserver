@@ -45,7 +45,7 @@ public class HTTPSession implements HTTPSessionAPI {
 
 	@Override
 	public void writeResponseStatus(String statusLine) throws IOException {
-		output.write(statusLine);
+		output.write(statusLine + "\r\n");
 		output.flush();
 	}
 
