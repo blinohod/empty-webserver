@@ -1,5 +1,7 @@
 package com.webdaemon;
 
+import java.io.IOException;
+
 public class Worker implements Runnable {
 
 	//private HTTPSession session;
@@ -23,9 +25,14 @@ public class Worker implements Runnable {
 			e.printStackTrace();
 		}
 
-		String response = handler.processRequest(request);
+		Response response = handler.getResponse(request);
 
-		session.writeResponseStatus(response);
+		try {
+			session.writeResponseStatus(response.getStatusLine());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
