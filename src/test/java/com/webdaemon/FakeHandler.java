@@ -3,15 +3,18 @@ package com.webdaemon;
 public class FakeHandler implements HandlerAPI {
 
 	@Override
-	public String processRequest(Request request) {
+	public Response getResponse(Request request) {
 
+		Response response = new Response();
+		response.setStatus(404);
+		
 		if (request.getMethod().equals("GET") && request.getPath().equals("/logs"))
-			return "HTTP/1.0 401 Authentication Required";
+			response.setStatus(401);
 			
 		if (request.getMethod().equals("GET") && request.getPath().equals("/file.exists"))
-			return "HTTP/1.0 200 OK";
+			response.setStatus(200);
 		
-		return "HTTP/1.0 404 Not Found";
+		return response;
 
 	}
 

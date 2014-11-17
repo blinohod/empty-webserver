@@ -2,6 +2,6 @@ package com.webdaemon;
 
 public interface HandlerAPI {
 
-	String processRequest(Request request);
+	Response getResponse(Request request);
 	
 }
