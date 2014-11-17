@@ -32,13 +32,13 @@ public class HTTPSession implements HTTPSessionAPI {
 	}
 
 	@Override
-	public String readRequestHeaders() {
+	public String readRequestHeaders() throws IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public byte[] readRequestBody() {
+	public byte[] readRequestBody() throws IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}
