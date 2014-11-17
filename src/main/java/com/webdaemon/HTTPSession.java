@@ -49,4 +49,13 @@ public class HTTPSession implements HTTPSessionAPI {
 		output.flush();
 	}
 
+	@Override
+	public void writeResponseHeader(String headerString) throws IOException {
+		if (headerString.isEmpty())
+			output.write("\r\n");
+		else
+			output.write(headerString + "\r\n\r\n");
+		output.flush();
+	}
+
 }

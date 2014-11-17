@@ -9,5 +9,6 @@ public interface HTTPSessionAPI {
 	byte[] readRequestBody() throws IOException;
 	
 	void writeResponseStatus(String status) throws IOException;
+	void writeResponseHeader(String headerString) throws IOException;
 	
 }

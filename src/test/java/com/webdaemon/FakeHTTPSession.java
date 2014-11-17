@@ -1,15 +1,17 @@
 package com.webdaemon;
 
+import java.io.IOException;
+
 public class FakeHTTPSession implements HTTPSessionAPI {
 
 	private String requestLine;
 	private String requestHeaders;
 	private byte[] requestBody;
-	
+
 	private String responseStatusLine;
 	private String responseHeaders;
 	private byte[] responseBody;
-	
+
 	@Override
 	public String readRequestLine() {
 		return requestLine;
@@ -54,5 +56,10 @@ public class FakeHTTPSession implements HTTPSessionAPI {
 	public void setRequestBody(byte[] requestBody) {
 		this.requestBody = requestBody;
 	}
-	
+
+	@Override
+	public void writeResponseHeader(String headerString) throws IOException {
+		this.responseHeaders = headerString;
+	}
+
 }
