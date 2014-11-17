@@ -78,7 +78,6 @@ public class Request {
 		String pairs[] = qstring.split("&");
 		for(String pair : pairs) {
 			String keyVal[] = pair.split("=", 2);
-			System.out.println(keyVal[0] + " " + keyVal[1]);
 			queryParams.put(URLDecoder.decode(keyVal[0],"UTF-8"), URLDecoder.decode(keyVal[1],"UTF-8"));
 		}
 	}
