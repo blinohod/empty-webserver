@@ -62,7 +62,7 @@ public class HTTPSessionTest {
 		clientOut.flush();
 
 		session.writeResponseStatus("HTTP/1.0 200 OK");
-		session.writeResponseHeader("Content-type: text/plain\r\nX-Header: 42");
+		session.writeResponseHeader("Content-type: text/plain\r\nX-Header: 42\r\n");
 
 		String lineToClient;
 
