@@ -20,12 +20,10 @@ public class Worker implements Runnable {
 
 		try {
             String requestLine = session.readRequestLine();
-            System.out.println(session.readRequestHeaders() + "/r/n" + session.readRequestBody());
             if (requestLine != null)
 			    request.parseRequestLine(session.readRequestLine());
 			request.parseRequestHeader(session.readRequestHeaders());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
