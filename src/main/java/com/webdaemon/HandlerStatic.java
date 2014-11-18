@@ -10,7 +10,7 @@ public class HandlerStatic implements HandlerAPI {
 	@Override
 	public boolean handleAndStop(Request request, Response response) {
 
-		String docRoot = System.getenv("PUBLIC_DIR");
+		String docRoot = System.getenv("PUBLIC_DIR") + "/public";
 
 		String filePath = docRoot + request.getPath();
 		File file = new File(filePath);
@@ -26,7 +26,13 @@ public class HandlerStatic implements HandlerAPI {
 
 		if (file.isDirectory()) {
 			response.setStatus(200);
-			response.setBody("Directory here");
+			String body = "<html><body>";
+			for (String fname : file.list()) {
+				body += "<a href=" + fname + ">" + fname + "</a><br>"; 
+			}
+			body += "</body></html>";
+			response.setHeader("Content-type", "text/html");
+			response.setBody(body);
 			return true;
 		}
 
@@ -37,6 +43,7 @@ public class HandlerStatic implements HandlerAPI {
 				FileReader reader = new FileReader(file);
 				int len = reader.read(content);
 				reader.close();
+				response.setHeader("Content-type", getContentType(filePath));
 				response.setBody(content);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -47,6 +54,14 @@ public class HandlerStatic implements HandlerAPI {
 
 		return false;
 
+	}
+	
+	private String getContentType(String fname) {
+		if (fname.endsWith(".gif"))
+			return "image/gif";
+		else if (fname.endsWith(".png"))
+			return "image/png";
+		return "text/plain";
 	}
 
 }
