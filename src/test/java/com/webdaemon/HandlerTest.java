@@ -50,7 +50,7 @@ public class HandlerTest {
 		assertEquals(302, response.getStatus());
 		assertTrue(response.getHeaderString().contains("Location: http://localhost:5000/"));
 	}
-	
+
 	@Test
 	public void shouldReturn200OnSimplePost() {
 		request.setMethod("POST");
@@ -58,7 +58,13 @@ public class HandlerTest {
 		response = handler.getResponse(request);
 		assertEquals(200, response.getStatus());
 	}
-	
-	
+
+	@Test
+	public void shouldReturn200OnSimplePut() {
+		request.setMethod("PUT");
+		request.setPath("/form");
+		response = handler.getResponse(request);
+		assertEquals(200, response.getStatus());
+	}
 
 }

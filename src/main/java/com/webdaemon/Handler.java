@@ -28,6 +28,10 @@ public class Handler implements HandlerAPI {
 			response.setStatus(200);
 		}
 
+		if (request.getMethod().equals("PUT") && request.getPath().equals("/form")) {
+			response.setStatus(200);
+		}
+
 		return response;
 	}
 
