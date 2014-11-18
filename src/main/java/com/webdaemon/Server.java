@@ -24,7 +24,7 @@ public class Server {
 				Socket socket = listener.accept();
 
 				if (socket.isConnected()) {
-					HandlerAPI handler = new Handler();
+					HandlerStackAPI handler = new HandlerStack();
 					HTTPSessionAPI session = new HTTPSession(socket);
 					Worker worker = new Worker(session, handler);
 

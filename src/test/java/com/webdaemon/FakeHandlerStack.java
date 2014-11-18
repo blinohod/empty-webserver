@@ -1,6 +1,6 @@
 package com.webdaemon;
 
-public class FakeHandler implements HandlerAPI {
+public class FakeHandlerStack implements HandlerStackAPI {
 
 	@Override
 	public Response getResponse(Request request) {

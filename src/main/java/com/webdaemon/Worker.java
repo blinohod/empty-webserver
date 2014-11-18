@@ -6,11 +6,11 @@ public class Worker implements Runnable {
 
 	// private HTTPSession session;
 	HTTPSessionAPI session;
-	HandlerAPI handler;
+	HandlerStackAPI handlerStack;
 
-	public Worker(HTTPSessionAPI session, HandlerAPI handler) {
+	public Worker(HTTPSessionAPI session, HandlerStackAPI handlerStack) {
 		this.session = session;
-		this.handler = handler;
+		this.handlerStack = handlerStack;
 	}
 
 	@Override
@@ -20,12 +20,13 @@ public class Worker implements Runnable {
 
 		try {
 			request.parseRequestLine(session.readRequestLine());
+			request.parseRequestHeader(session.readRequestHeaders());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		Response response = handler.getResponse(request);
+		Response response = handlerStack.getResponse(request);
 
 		try {
 			session.writeResponseStatus(response.getStatusLine());
