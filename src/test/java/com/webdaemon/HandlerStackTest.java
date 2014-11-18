@@ -1,6 +1,6 @@
 package com.webdaemon;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import java.util.Base64;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class HandlerStackTest {
 
-	private Request request;	
+	private Request request;
 	private Response response;
 	private HandlerStack handlerStack;
 	
@@ -49,7 +49,7 @@ public class HandlerStackTest {
     public void shouldReturn200OnLogsWithValidCredentials() {
         request.setMethod("GET");
         request.setPath("/logs");
-        String credentials = Base64.encode("admin:hunter2".getBytes());
+        String credentials = Base64.getEncoder().encodeToString("admin:hunter2".getBytes());
         request.setHeader("Authorization", "Basic " + credentials);
         response = handlerStack.getResponse(request);
         assertEquals(200, response.getStatus());

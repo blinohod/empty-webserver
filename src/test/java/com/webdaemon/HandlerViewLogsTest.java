@@ -10,9 +10,9 @@ import static org.junit.Assert.assertFalse;
 
 public class HandlerViewLogsTest {
 
-    Response response;
-    Request request;
-    HandlerViewLogs viewLogs;
+	private Response response;
+    private Request request;
+    private HandlerViewLogs viewLogs;
 
     @Before
     public void setup() {

@@ -1,10 +1,10 @@
 package com.webdaemon;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import java.util.Base64;
 
 public class HandlerViewLogs implements HandlerAPI {
 
-    private String credentials = "Basic " + Base64.encode("admin:hunter2".getBytes());
+    private String credentials = "Basic " + Base64.getEncoder().encodeToString("admin:hunter2".getBytes());
 
 	@Override
 	public boolean handleAndStop(Request request, Response response) {
