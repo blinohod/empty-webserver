@@ -31,7 +31,7 @@ public class Worker implements Runnable {
 		try {
 			session.writeResponseStatus(response.getStatusLine());
 			session.writeResponseHeader(response.getHeaderString());
-			session.writeResponseBody(new String("TEST").toCharArray());
+			session.writeResponseBody(response.getBodyChars());
 			session.close();
 
 		} catch (IOException e) {
