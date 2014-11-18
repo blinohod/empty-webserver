@@ -58,7 +58,7 @@ public class HTTPSession implements HTTPSessionAPI {
 		if (headerString.isEmpty())
 			output.write("\r\n");
 		else
-			output.write(headerString + "\r\n\r\n");
+			output.write(headerString + "\r\n");
 		output.flush();
 	}
 
