@@ -6,8 +6,7 @@ public class Response {
 
 	private int status = 200;
 	private Hashtable<String, String> headers = new Hashtable<String, String>();
-
-    private StringBuffer body = new StringBuffer();
+	private char[] body;
 		
 	public void setStatus(int status) {
 		this.status = status;
@@ -33,14 +32,12 @@ public class Response {
 		return headerString;
 	}
 
-	public void setBody(String testBody) {
-		this.body.append(testBody);
+	public void setBody(String bodyString) {
+		this.body = bodyString.toCharArray();
 	}
 
 	public char[] getBodyChars() {
-        if (this.body.length() > 0)
-            return this.body.toString().toCharArray();
-		return new String("TEST BODY").toCharArray();
+		return this.body;
 	}
 	
 	// ================= Private Methods After This Line !!!
