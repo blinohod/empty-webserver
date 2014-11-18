@@ -20,7 +20,7 @@ public class HandlerStack implements HandlerStackAPI {
 	public Response getResponse(Request request) {
 
 		Response response = new Response();
-		
+
 		for (HandlerAPI handler : handlers)
 			if(handler.handleAndStop(request, response))
 				break;

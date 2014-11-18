@@ -1,10 +1,12 @@
 package com.webdaemon;
 
-import static org.junit.Assert.*;
-
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class HandlerStackTest {
 
@@ -33,6 +35,25 @@ public class HandlerStackTest {
 		response = handlerStack.getResponse(request);
 		assertEquals(401, response.getStatus());
 	}
+
+    @Test
+    public void shouldReturnBasicAuthRealmOnLogs() {
+        request.setMethod("GET");
+        request.setPath("/logs");
+        response = handlerStack.getResponse(request);
+        assertEquals(401, response.getStatus());
+        assertEquals("Basic realm=\"empty_server\"", response.getHeader("WWW-Authenticate"));
+    }
+
+    @Test
+    public void shouldReturn200OnLogsWithValidCredentials() {
+        request.setMethod("GET");
+        request.setPath("/logs");
+        String credentials = Base64.encode("admin:hunter2".getBytes());
+        request.setHeader("Authorization", "Basic " + credentials);
+        response = handlerStack.getResponse(request);
+        assertEquals(200, response.getStatus());
+    }
 	
 	@Ignore
 	public void shouldReturn200OnRoot() {

@@ -19,7 +19,10 @@ public class Worker implements Runnable {
 		Request request = new Request();
 
 		try {
-			request.parseRequestLine(session.readRequestLine());
+            String requestLine = session.readRequestLine();
+            System.out.println(session.readRequestHeaders() + "/r/n" + session.readRequestBody());
+            if (requestLine != null)
+			    request.parseRequestLine(session.readRequestLine());
 			request.parseRequestHeader(session.readRequestHeaders());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

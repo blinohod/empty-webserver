@@ -2,9 +2,7 @@ package com.webdaemon;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -90,10 +88,22 @@ public class Request {
 			this.headers.put(parts[0], parts[1]);
 		}
 	}
+
+    public String getHeaderString() {
+        String headerString = "";
+        for ( String name : headers.keySet()) {
+            headerString += name + ": " + headers.get(name) + "\r\n";
+        }
+        return headerString;
+    }
 	
 	public String getHeader(String name) {
 		return this.headers.get(name);
 	}
+
+    public void setHeader(String name, String value) {
+        this.headers.put(name, value);
+    }
 	
 	public void parseBody(byte[] rawBody) {
 		setBody(rawBody);

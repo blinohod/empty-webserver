@@ -37,8 +37,12 @@ public class Response {
 	}
 
 	public void setBody(char[] bodyChars) {
-		this.body = bodyChars;
-	}
+        this.body = bodyChars;
+    }
+
+    public String getHeader(String key) {
+        return headers.get(key);
+    }
 
 	public char[] getBodyChars() {
 		return this.body;
