@@ -5,6 +5,7 @@ import java.util.Hashtable;
 public class Response {
 
 	private int status = 200;
+	private Hashtable<String, String> headers = new Hashtable<String, String>();;
 		
 	public void setStatus(int status) {
 		this.status = status;
@@ -18,12 +19,16 @@ public class Response {
 		return "HTTP/1.0 " + this.getStatus() + " " + getStatusMessage();
 	}
 
-	public void setHeader(String string, String string2) {
-		// TODO Auto-generated method stub
+	public void setHeader(String name, String value) {
+		this.headers.put(name, value);
 	}
 
-	public Object getHeaderString() {
-		return "Content-type: text/plain";
+	public String getHeaderString() {
+		String headerString = "";
+		for ( String name : headers.keySet()) {
+			headerString += name + ": " + headers.get(name) + "\r\n";
+		}			
+		return headerString;
 	}
 
 	public void setBody(String testBody) {

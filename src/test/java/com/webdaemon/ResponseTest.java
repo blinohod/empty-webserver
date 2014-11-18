@@ -39,7 +39,15 @@ public class ResponseTest {
 	@Test
 	public void canGenerateResponseHeader() {
 		response.setHeader("Content-type", "text/plain");
-		assertEquals("Content-type: text/plain", response.getHeaderString());
+		assertEquals("Content-type: text/plain\r\n", response.getHeaderString());
+	}
+
+	@Test
+	public void canGenerateResponseMultipleHeaders() {
+		response.setHeader("Content-type", "text/plain");
+		response.setHeader("Accept", "image/gif");		
+		assertTrue(response.getHeaderString().contains("Content-type: text/plain"));
+		assertTrue(response.getHeaderString().contains("Accept: image/gif"));
 	}
 
 	@Test
