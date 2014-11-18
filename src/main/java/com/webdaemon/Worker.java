@@ -29,7 +29,7 @@ public class Worker implements Runnable {
 
 		try {
 			session.writeResponseStatus(response.getStatusLine());
-			session.writeResponseHeader("Content-type: text/plain");
+			session.writeResponseHeader(response.getHeaderString());
 			session.writeResponseBody(new String("TEST").toCharArray());
 			session.close();
 
