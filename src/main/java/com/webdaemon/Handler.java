@@ -11,7 +11,7 @@ public class Handler implements HandlerAPI {
 		if (request.getMethod().equals("GET") && request.getPath().equals("/logs"))
 			response.setStatus(401);
 
-		if (request.getMethod().equals("GET") && request.getPath().equals("/filehere"))
+		if (request.getMethod().equals("GET") && request.getPath().equals("/"))
 			response.setStatus(200);
 
 		return response;
