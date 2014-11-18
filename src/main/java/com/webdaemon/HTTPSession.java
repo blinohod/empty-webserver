@@ -64,7 +64,7 @@ public class HTTPSession implements HTTPSessionAPI {
 
 	@Override
 	public void writeResponseBody(char[] body) throws IOException {
-		output.write("BODY HERE\r\n");
+		output.write(body);
 		output.flush();
 	}
 
