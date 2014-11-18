@@ -10,6 +10,8 @@ public class HandlerStack implements HandlerStackAPI {
 		handlers = new ArrayList<HandlerAPI>();
 		handlers.add(new HandlerViewLogs());
 		handlers.add(new HandlerForm());
+		handlers.add(new HandlerRedirect());
+		handlers.add(new HandlerOptions());
 		handlers.add(new HandlerDefault()); // return final 404 if no handlers interested		
 	}
 
@@ -22,33 +24,9 @@ public class HandlerStack implements HandlerStackAPI {
 			if(handler.handleAndStop(request, response))
 				break;
 		/*
-		response.setStatus(404);
-		
-		if (request.getMethod().equals("GET") && request.getPath().equals("/logs")) {
-            response.setStatus(401);
-            response.setBody("Authentication required");
-        }
 
 		if (request.getMethod().equals("GET") && request.getPath().equals("/"))
 			response.setStatus(200);
-		
-		if (request.getMethod().equals("OPTIONS") && request.getPath().equals("/method_options")) {
-			response.setHeader("Allow", "GET,HEAD,POST,OPTIONS,PUT");
-			response.setStatus(200);
-		}
-
-		if (request.getMethod().equals("GET") && request.getPath().equals("/redirect")) {
-			response.setHeader("Location", "http://localhost:5000/");
-			response.setStatus(302);
-		}
-
-		if (request.getMethod().equals("POST") && request.getPath().equals("/form")) {
-			response.setStatus(200);
-		}
-
-		if (request.getMethod().equals("PUT") && request.getPath().equals("/form")) {
-			response.setStatus(200);
-		}
 		
 		*/
 		
