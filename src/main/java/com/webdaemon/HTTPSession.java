@@ -32,8 +32,13 @@ public class HTTPSession implements HTTPSessionAPI {
 
 	@Override
 	public String readRequestHeaders() throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		String headers = "";
+		String ln;
+		do {
+			ln = input.readLine();
+			headers = headers + ln + "\r\n";
+		} while (!ln.isEmpty());
+		return headers;
 	}
 
 	@Override
@@ -64,7 +69,8 @@ public class HTTPSession implements HTTPSessionAPI {
 
 	@Override
 	public void writeResponseBody(char[] body) throws IOException {
-		output.write(body);
+		if (body != null)
+			output.write(body);
 		output.flush();
 	}
 
