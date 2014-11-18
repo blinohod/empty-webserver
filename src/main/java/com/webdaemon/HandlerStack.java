@@ -8,6 +8,7 @@ public class HandlerStack implements HandlerStackAPI {
 	
 	public HandlerStack() {
 		handlers = new ArrayList<HandlerAPI>();
+		handlers.add(new HandlerViewLogs());
 		handlers.add(new HandlerDefault()); // return final 404 if no handlers interested		
 	}
 
