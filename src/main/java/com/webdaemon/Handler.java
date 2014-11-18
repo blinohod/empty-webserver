@@ -13,6 +13,11 @@ public class Handler implements HandlerAPI {
 
 		if (request.getMethod().equals("GET") && request.getPath().equals("/"))
 			response.setStatus(200);
+		
+		if (request.getMethod().equals("OPTIONS") && request.getPath().equals("/method_options")) {
+			response.setHeader("Allow", "GET,HEAD,POST,OPTIONS,PUT");
+			response.setStatus(200);
+		}
 
 		return response;
 	}
