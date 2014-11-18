@@ -34,7 +34,7 @@ public class HandlerStackTest {
 		assertEquals(401, response.getStatus());
 	}
 	
-	@Test
+	@Ignore
 	public void shouldReturn200OnRoot() {
 		request.setMethod("GET");
 		request.setPath("/");

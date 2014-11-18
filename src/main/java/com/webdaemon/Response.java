@@ -36,6 +36,10 @@ public class Response {
 		this.body = bodyString.toCharArray();
 	}
 
+	public void setBody(char[] bodyChars) {
+		this.body = bodyChars;
+	}
+
 	public char[] getBodyChars() {
 		return this.body;
 	}

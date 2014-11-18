@@ -1,13 +1,16 @@
 package com.webdaemon;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class HandlerStatic implements HandlerAPI {
 
-	private static final String docRoot = "/Users/michael.bochkaryov/Documents/workspace/cob_spec/public";
 
 	@Override
 	public boolean handleAndStop(Request request, Response response) {
+
+		String docRoot = System.getenv("PUBLIC_DIR");
 
 		String filePath = docRoot + request.getPath();
 		File file = new File(filePath);
@@ -16,7 +19,7 @@ public class HandlerStatic implements HandlerAPI {
 			return false;
 
 		if (!request.getMethod().equals("GET")
-				|| request.getMethod().equals("PATCH")) {
+				&& !request.getMethod().equals("PATCH")) {
 			response.setStatus(405);
 			return true;
 		}
@@ -29,7 +32,16 @@ public class HandlerStatic implements HandlerAPI {
 
 		if (file.isFile()) {
 			response.setStatus(200);
-			response.setBody("File content here");
+			try {
+				char[] content = new char[(int) file.length()];
+				FileReader reader = new FileReader(file);
+				int len = reader.read(content);
+				reader.close();
+				response.setBody(content);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return true;
 		}
 
