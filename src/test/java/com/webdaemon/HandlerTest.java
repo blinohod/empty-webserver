@@ -33,4 +33,32 @@ public class HandlerTest {
 		assertEquals(200, response.getStatus());
 	}
 
+	@Test
+	public void shouldReturn200OnOptions() {
+		request.setMethod("OPTIONS");
+		request.setPath("/method_options");
+		response = handler.getResponse(request);
+		assertEquals(200, response.getStatus());
+	}
+
+
+	@Test
+	public void shouldReturn302Redirect() {
+		request.setMethod("GET");
+		request.setPath("/redirect");
+		response = handler.getResponse(request);
+		assertEquals(302, response.getStatus());
+		assertTrue(response.getHeaderString().contains("Location: http://localhost:5000/"));
+	}
+	
+	@Test
+	public void shouldReturn200OnSimplePost() {
+		request.setMethod("POST");
+		request.setPath("/form");
+		response = handler.getResponse(request);
+		assertEquals(200, response.getStatus());
+	}
+	
+	
+
 }

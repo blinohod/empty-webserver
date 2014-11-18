@@ -19,6 +19,15 @@ public class Handler implements HandlerAPI {
 			response.setStatus(200);
 		}
 
+		if (request.getMethod().equals("GET") && request.getPath().equals("/redirect")) {
+			response.setHeader("Location", "http://localhost:5000/");
+			response.setStatus(302);
+		}
+
+		if (request.getMethod().equals("POST") && request.getPath().equals("/form")) {
+			response.setStatus(200);
+		}
+
 		return response;
 	}
 
