@@ -46,6 +46,7 @@ public class Response {
 		statusMessages.put(200, "OK");
 		statusMessages.put(401, "Authentication Required");
 		statusMessages.put(404, "Not Found");
+		statusMessages.put(405, "Method Not Allowed");
 		
 		if(statusMessages.containsKey(getStatus()))
 			return statusMessages.get(getStatus());
