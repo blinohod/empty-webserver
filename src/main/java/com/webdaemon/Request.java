@@ -83,6 +83,7 @@ public class Request {
 	}
 	
 	public void parseRequestHeader(String header) {
+		if (header == null) return;
 		String headers[] = header.split("\\r\\n");
 		for (String headerLine : headers) {
 			String parts[] = headerLine.split("\\s*:\\s*", 2);
