@@ -22,8 +22,10 @@ public class HandlerStack implements HandlerStackAPI {
 		/*
 		response.setStatus(404);
 		
-		if (request.getMethod().equals("GET") && request.getPath().equals("/logs"))
-			response.setStatus(401);
+		if (request.getMethod().equals("GET") && request.getPath().equals("/logs")) {
+            response.setStatus(401);
+            response.setBody("Authentication required");
+        }
 
 		if (request.getMethod().equals("GET") && request.getPath().equals("/"))
 			response.setStatus(200);

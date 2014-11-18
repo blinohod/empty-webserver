@@ -5,7 +5,9 @@ import java.util.Hashtable;
 public class Response {
 
 	private int status = 200;
-	private Hashtable<String, String> headers = new Hashtable<String, String>();;
+	private Hashtable<String, String> headers = new Hashtable<String, String>();
+
+    private StringBuffer body = new StringBuffer();
 		
 	public void setStatus(int status) {
 		this.status = status;
@@ -32,10 +34,12 @@ public class Response {
 	}
 
 	public void setBody(String testBody) {
-		// TODO Auto-generated method stub
+		this.body.append(testBody);
 	}
 
 	public char[] getBodyChars() {
+        if (this.body.length() > 0)
+            return this.body.toString().toCharArray();
 		return new String("TEST BODY").toCharArray();
 	}
 	

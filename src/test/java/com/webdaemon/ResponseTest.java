@@ -1,9 +1,9 @@
 package com.webdaemon;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class ResponseTest {
 
@@ -56,5 +56,12 @@ public class ResponseTest {
 		response.setBody(testBody);
 		assertArrayEquals(testBody.toCharArray(), response.getBodyChars());
 	}
+
+    @Test
+    public void canSetBodyFromString() {
+        String testBody = "This is a test";
+        response.setBody(testBody);
+        assertArrayEquals(testBody.toCharArray(), response.getBodyChars());
+    }
 	
 }
