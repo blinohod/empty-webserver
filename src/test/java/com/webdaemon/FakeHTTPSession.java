@@ -10,7 +10,7 @@ public class FakeHTTPSession implements HTTPSessionAPI {
 
 	private String responseStatusLine;
 	private String responseHeaders;
-	private byte[] responseBody;
+	private char[] responseBody;
 
 	@Override
 	public String readRequestLine() {
@@ -41,7 +41,7 @@ public class FakeHTTPSession implements HTTPSessionAPI {
 		return responseHeaders;
 	}
 
-	public byte[] getResponseBody() {
+	public char[] getResponseBody() {
 		return responseBody;
 	}
 
@@ -60,6 +60,15 @@ public class FakeHTTPSession implements HTTPSessionAPI {
 	@Override
 	public void writeResponseHeader(String headerString) throws IOException {
 		this.responseHeaders = headerString;
+	}
+
+	@Override
+	public void close() {
+	}
+
+	@Override
+	public void writeResponseBody(char[] body) throws IOException {
+		this.responseBody = body;		
 	}
 
 }

@@ -10,5 +10,8 @@ public interface HTTPSessionAPI {
 	
 	void writeResponseStatus(String status) throws IOException;
 	void writeResponseHeader(String headerString) throws IOException;
+	void writeResponseBody(char[] body) throws IOException;
+	
+	void close() throws IOException;
 	
 }

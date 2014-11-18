@@ -25,10 +25,9 @@ public class HTTPSession implements HTTPSessionAPI {
 
 	@Override
 	public String readRequestLine() throws IOException {
-		if (requestLine != null)
-			return requestLine;
-		else
-			return input.readLine();
+		if (requestLine == null)
+			requestLine = input.readLine();
+		return requestLine;
 	}
 
 	@Override
@@ -55,6 +54,17 @@ public class HTTPSession implements HTTPSessionAPI {
 			output.write("\r\n");
 		else
 			output.write(headerString + "\r\n\r\n");
+		output.flush();
+	}
+
+	@Override
+	public void close() throws IOException {
+		socket.close();	
+	}
+
+	@Override
+	public void writeResponseBody(char[] body) throws IOException {
+		output.write("BODY HERE\r\n");
 		output.flush();
 	}
 
