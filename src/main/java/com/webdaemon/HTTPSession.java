@@ -37,7 +37,7 @@ public class HTTPSession implements HTTPSessionAPI {
 		do {
 			ln = input.readLine();
 			headers = headers + ln + "\r\n";
-		} while (!ln.isEmpty());
+		} while (ln != null && ln.isEmpty());
 		return headers;
 	}
 
