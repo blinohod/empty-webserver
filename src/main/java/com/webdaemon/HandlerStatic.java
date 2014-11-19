@@ -10,7 +10,7 @@ public class HandlerStatic implements HandlerAPI {
 	@Override
 	public boolean handleAndStop(Request request, Response response) {
 
-		String docRoot = System.getenv("PUBLIC_DIR") + "public";
+		String docRoot = Server.getPublicDir();
 
 		String filePath = docRoot + request.getPath();
 		File file = new File(filePath);
