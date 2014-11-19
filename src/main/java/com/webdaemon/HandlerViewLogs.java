@@ -8,6 +8,8 @@ public class HandlerViewLogs implements HandlerAPI {
 
 	@Override
 	public boolean handleAndStop(Request request, Response response) {
+
+
 		
 		if(request.getPath().equals("/logs") && request.getMethod().equals("GET")) {
 

@@ -28,7 +28,7 @@ public class HandlerStatic implements HandlerAPI {
 			response.setStatus(200);
 			String body = "<html>\n<head></head>\n<body>\n";
 			for (String fname : file.list()) {
-				body += "<a href=\"" + fname + "\">" + fname + "</a><br>\n"; 
+				body += "<a href=\"/" + fname + "\">" + fname + "</a><br>\n";
 			}
 			body += "\n</body></html>\n";
 			response.setHeader("Content-type", "text/html");

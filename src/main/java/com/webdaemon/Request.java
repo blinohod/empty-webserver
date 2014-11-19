@@ -85,7 +85,8 @@ public class Request {
 		String headers[] = header.split("\\r\\n");
 		for (String headerLine : headers) {
 			String parts[] = headerLine.split("\\s*:\\s*", 2);
-			this.headers.put(parts[0], parts[1]);
+            if (parts.length == 2)
+			    this.headers.put(parts[0], parts[1]);
 		}
 	}
 
