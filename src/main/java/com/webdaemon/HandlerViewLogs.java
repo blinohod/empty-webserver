@@ -2,8 +2,6 @@ package com.webdaemon;
 
 import java.util.Base64;
 import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class HandlerViewLogs implements HandlerAPI {
@@ -12,24 +10,8 @@ public class HandlerViewLogs implements HandlerAPI {
     private String docRoot = Server.getPublicDir();
     private final Logger logger = Logger.getLogger("logs");
     private FileHandler fh = null;
-    private static int countLog = 0;
-    private String logFilePath = docRoot + "logs" + countLog + ".log";
+    private String logFilePath = docRoot + "/logs.log";
     private static String bodyText = "";
-
-    public HandlerViewLogs() {
-        try {
-            fh = new FileHandler(logFilePath);
-            fh.setFormatter(new Formatter() {
-                public String format(LogRecord record) {
-                    return record.getMessage() + "\n";
-                }
-            });
-            logger.addHandler(fh);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        countLog++;
-    }
 
 	@Override
 	public boolean handleAndStop(Request request, Response response) {
@@ -49,12 +31,16 @@ public class HandlerViewLogs implements HandlerAPI {
 	}
 
     public void doLogging(String logText) {
-        logger.info(logText);
+//        logger.info(logText);
         bodyText += logText + "\n";
     }
      public String getLogFilePath() {
          return this.logFilePath;
      }
+
+    public void setLogFilePath(String logFile) {
+        this.logFilePath = logFile;
+    }
 
     public void setAuthorized(Response response) {
         response.setStatus(200);
