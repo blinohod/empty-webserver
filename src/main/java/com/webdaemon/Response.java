@@ -38,10 +38,11 @@ public class Response {
 	}
 
 	public void setBody(String bodyString) {
-		this.body = bodyString.getBytes();
+		setBody(bodyString.getBytes());
 	}
 
 	public void setBody(byte[] bodyBytes) {
+		setHeader("Content-length", "" + bodyBytes.length);
         this.body = bodyBytes;
     }
 
