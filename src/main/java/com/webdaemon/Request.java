@@ -2,8 +2,6 @@ package com.webdaemon;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,10 +11,12 @@ public class Request {
 	private String method;
 	private String path;
 	private String httpVersion;
+    private String requestLine;
 	private Hashtable<String, String> queryParams;
 	private Hashtable<String, String> postParams;
 	private Hashtable<String, String> headers;
 	private String body;
+    public String logFile;
 
 	public Request() {
 		this.queryParams = new Hashtable<String, String>();
@@ -47,6 +47,10 @@ public class Request {
 		this.httpVersion = httpVersion;
 	}
 
+    public String getRequestLine() {
+        return requestLine;
+    }
+
 	public String getBody() {
 		return body;
 	}
@@ -76,6 +80,7 @@ public class Request {
 				.compile("^(CONNECT|DELETE|GET|HEAD|OPTIONS|POST|PUT|TRACE|PATCH)\\s+([^\\s]+)\\s+HTTP/(\\d.\\d)$");
 		Matcher m = p.matcher(requestLine);
 		if (m.find()) {
+            this.requestLine = requestLine;
 			setMethod(m.group(1));
 			parseUrl(m.group(2));
 			setHttpVersion(m.group(3));

@@ -1,9 +1,10 @@
 package com.webdaemon;
 
-import java.util.Base64;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.util.Base64;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -51,6 +52,7 @@ public class HandlerStackTest {
         request.setPath("/logs");
         String credentials = Base64.getEncoder().encodeToString("admin:hunter2".getBytes());
         request.setHeader("Authorization", "Basic " + credentials);
+        request.logFile = "~/logs.log";
         response = handlerStack.getResponse(request);
         assertEquals(200, response.getStatus());
     }
