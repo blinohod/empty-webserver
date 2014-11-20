@@ -35,33 +35,28 @@ public class ResponseTest {
 		response.setStatus(404);
 		assertEquals("HTTP/1.0 404 Not Found", response.getStatusLine());
 	}
-	
-	@Test
-	public void canGenerateResponseHeader() {
-		response.setHeader("Content-type", "text/plain");
-		assertEquals("Content-type: text/plain\r\n", response.getHeaderString());
-	}
+
 
 	@Test
 	public void canGenerateResponseMultipleHeaders() {
 		response.setHeader("Content-type", "text/plain");
 		response.setHeader("Accept", "image/gif");		
-		assertTrue(response.getHeaderString().contains("Content-type: text/plain"));
-		assertTrue(response.getHeaderString().contains("Accept: image/gif"));
+		assertTrue(new String(response.getBytes()).contains("Content-type: text/plain"));
+		assertTrue(new String(response.getBytes()).contains("Accept: image/gif"));
 	}
 
 	@Test
 	public void canGenerateBodyFromString() {
 		String testBody = "TEST BODY";
 		response.setBody(testBody);
-		assertArrayEquals(testBody.toCharArray(), response.getBodyChars());
+		assertArrayEquals(testBody.getBytes(), response.getBodyBytes());
 	}
 
     @Test
     public void canSetBodyFromString() {
         String testBody = "This is a test";
         response.setBody(testBody);
-        assertArrayEquals(testBody.toCharArray(), response.getBodyChars());
+        assertArrayEquals(testBody.getBytes(), response.getBodyBytes());
     }
 	
 }

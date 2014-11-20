@@ -1,77 +1,54 @@
 package com.webdaemon;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HTTPSession implements HTTPSessionAPI {
 
 	private Socket socket;
 	private BufferedReader input;
-	private BufferedWriter output;
-	
-	private String requestLine;
+	ArrayList<String> headerLines = new ArrayList<String>();
 
 	public HTTPSession(Socket socket) throws Exception {
 		this.socket = socket;
 		this.input = new BufferedReader(new InputStreamReader(
 				socket.getInputStream()));
-		this.output = new BufferedWriter(new OutputStreamWriter(
-				socket.getOutputStream()));
 	}
 
 	@Override
-	public String readRequestLine() throws IOException {
-		if (requestLine == null)
-			requestLine = input.readLine();
-		return requestLine;
+	public String[] readRequestHeaderLines() throws IOException {
+		if (headerLines.isEmpty()) {
+			String line;
+			do {
+				line = input.readLine();
+				if (line != null && !line.isEmpty())
+					headerLines.add(line);
+			} while (line != null && !line.isEmpty());
+		}
+		return headerLines.toArray(new String[headerLines.size()]);
 	}
 
 	@Override
-	public String readRequestHeaders() throws IOException {
-		String headers = "";
-		String ln;
-		do {
-			ln = input.readLine();
-			headers = headers + ln + "\r\n";
-		} while (ln != null && !ln.isEmpty());
-		return headers;
-	}
-
-	@Override
-	public byte[] readRequestBody() throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void writeResponseStatus(String statusLine) throws IOException {
-		output.write(statusLine + "\r\n");
-		output.flush();
-	}
-
-	@Override
-	public void writeResponseHeader(String headerString) throws IOException {
-		if (headerString.isEmpty())
-			output.write("\r\n");
-		else
-			output.write(headerString + "\r\n");
-		output.flush();
+	public String readRequestBody(int bodySize) throws IOException {
+		char[] buf = new char[bodySize];
+		int size = input.read(buf);
+		return new String(Arrays.copyOf(buf, size));
 	}
 
 	@Override
 	public void close() throws IOException {
-		socket.close();	
+		socket.close();
 	}
 
 	@Override
-	public void writeResponseBody(char[] body) throws IOException {
-		if (body != null)
-			output.write(body);
-		output.flush();
+	public void writeResponse(byte[] response) throws IOException {
+		if (response != null)
+			socket.getOutputStream().write(response);
+		socket.getOutputStream().flush();
 	}
 
 }

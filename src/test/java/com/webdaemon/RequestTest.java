@@ -2,102 +2,88 @@ package com.webdaemon;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class RequestTest {
 
 	private Request request;
-	
+
 	@Before
 	public void setupRequest() {
-		request = new Request();  
+		request = new Request();
 	}
-	
+
 	@Test
-	public void canParseConnectMethodLine() throws Exception {
-		request.parseRequestLine("CONNECT /path/here HTTP/1.1");
+	public void canParseRequestMethod() throws Exception {
+		String[] headerLines = new String[] { "CONNECT /path/here HTTP/1.1" };
+		request.parseHeader(headerLines);
 		assertEquals("CONNECT", request.getMethod());
-	}
 
-	@Test
-	public void canParseDeleteMethodLine() throws Exception {
-		request.parseRequestLine("DELETE /path/here HTTP/1.1");
+		headerLines = new String[] { "DELETE /path/here HTTP/1.1" };
+		request.parseHeader(headerLines);
 		assertEquals("DELETE", request.getMethod());
-	}
-
-	@Test
-	public void canParseGetMethodLine() throws Exception {
-		request.parseRequestLine("GET /path/here HTTP/1.1");
-		assertEquals("GET", request.getMethod());
-	}
-
-	@Test
-	public void canParseHeadMethodLine() throws Exception {
-		request.parseRequestLine("HEAD /path/here HTTP/1.1");
-		assertEquals("HEAD", request.getMethod());
-	}
-	
-	@Test
-	public void canParsePostMethodLine() throws Exception {
-		request.parseRequestLine("POST /path/here HTTP/1.1");
-		assertEquals("POST", request.getMethod());
 	}
 
 	@Test(expected = Exception.class)
 	public void throwsOnUnknownMethod() throws Exception {
-		request.parseRequestLine("STRANGE /path/here HTTP/1.1");
+		String[] headerLines = new String[] { "WHATTHEMETHOD /path/here HTTP/1.1" };
+		request.parseHeader(headerLines);
 	}
-	
+
 	@Test
 	public void canParseHttpVersion() throws Exception {
-		request.parseRequestLine("POST /path/here HTTP/0.9");
+		String[] headerLines = new String[] { "POST /path/here HTTP/0.9" };
+		request.parseHeader(headerLines);
 		assertEquals("0.9", request.getHttpVersion());
-		request.parseRequestLine("POST /new/path/here HTTP/1.1");
-		assertEquals("1.1", request.getHttpVersion());
 	}
-	
+
 	@Test
 	public void canParsePath() throws Exception {
-		request.parseRequestLine("GET /some/path HTTP/1.0");
-		assertEquals("/some/path", request.getPath());
+		String[] headerLines = new String[] { "POST /path/here HTTP/0.9" };
+		request.parseHeader(headerLines);
+		assertEquals("/path/here", request.getPath());
 	}
 
 	@Test
 	public void canParsePathWithQueryString() throws Exception {
-		request.parseRequestLine("GET /some/path?param=val HTTP/1.0");
-		assertEquals("/some/path", request.getPath());
+		String[] headerLines = new String[] { "POST /path/here?param=val HTTP/0.9" };
+		request.parseHeader(headerLines);
+		assertEquals("/path/here", request.getPath());
 	}
 
 	@Test
 	public void canParseQueryString() throws Exception {
-		request.parseRequestLine("GET /some/path?foo=bar&foo+1=bar+2 HTTP/1.0");
-		assertEquals("bar", request.getQueryParam("foo"));		
+		String[] headerLines = new String[] { "GET /some/path?foo=bar&foo+1=bar+2 HTTP/1.0" };
+		request.parseHeader(headerLines);
+		assertEquals("bar", request.getQueryParam("foo"));
 		assertEquals("bar 2", request.getQueryParam("foo 1"));
 	}
 
 	@Test
 	public void canParseHeaders() throws Exception {
-		request.parseRequestLine("POST /some/form HTTP/1.1");
-		request.parseRequestHeader("Host: www.webdaemon.com\r\n"
-				+ "Accept: text/html\r\n"
-				+ "Content-type: text/plain\r\n"
-				+ "Content-length: 1234");		
+		String[] headerLines = new String[] {
+				"GET /some/path?foo=bar&foo+1=bar+2 HTTP/1.0",
+				"Host: www.webdaemon.com",
+				"Accept: text/html",
+				"Content-type: text/plain", 
+				"Content-length: 1234" };
+		request.parseHeader(headerLines);
 		assertEquals("www.webdaemon.com", request.getHeader("Host"));
 		assertEquals("text/plain", request.getHeader("Content-type"));
 	}
-	
+
+
 	@Test
-	public void canFetchNotEncodedBody() throws Exception {
-		request.parseRequestLine("POST /poster HTTP/1.0");
-		request.parseRequestHeader("Host: ooops.com\r\n"
-				+ "Content-type: text/plain\r\n"
-				+ "Content-length: 4");
-		
-		byte[] rawBody = new String("TEST").getBytes();
-		request.parseBody(rawBody);
-		
-		assertArrayEquals(rawBody, request.getBody());
-	}
+	public void canFetchBodyAsByteArray() throws Exception {
+		String[] headerLines = new String[] {
+				"POST /some/path HTTP/1.0",
+				"Content-type: text/plain", 
+				"Content-length: 1234" };		
+		request.parseHeader(headerLines);
+		request.setBody("STRING");
+		assertEquals("STRING", request.getBody()); }
 
 }

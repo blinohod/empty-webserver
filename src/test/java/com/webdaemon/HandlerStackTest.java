@@ -78,7 +78,7 @@ public class HandlerStackTest {
 		request.setPath("/redirect");
 		response = handlerStack.getResponse(request);
 		assertEquals(302, response.getStatus());
-		assertTrue(response.getHeaderString().contains("Location: http://localhost:5000/"));
+		assertTrue(new String(response.getBytes()).contains("Location: http://localhost:5000/"));
 	}
 
 	@Test

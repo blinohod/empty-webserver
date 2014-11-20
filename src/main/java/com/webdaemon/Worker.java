@@ -19,8 +19,13 @@ public class Worker implements Runnable {
 		Request request = new Request();
 
 		try {
-            request.parseRequestLine(session.readRequestLine());
-			request.parseRequestHeader(session.readRequestHeaders());
+            String[] requestHeader = session.readRequestHeaderLines();
+            if (requestHeader != null && requestHeader.length > 0) {
+			    request.parseHeader(requestHeader);
+			    String bodySizeStr = request.getHeader("Content-length"); 
+			    String requestBody = session.readRequestBody(bodySizeStr == null ? 0 : Integer.parseInt(bodySizeStr));
+			    request.setBody(requestBody);
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -28,9 +33,7 @@ public class Worker implements Runnable {
 		Response response = handlerStack.getResponse(request);
 
 		try {
-			session.writeResponseStatus(response.getStatusLine());
-			session.writeResponseHeader(response.getHeaderString());
-			session.writeResponseBody(response.getBodyChars());
+			session.writeResponse(response.getBytes());
 			session.close();
 
 		} catch (IOException e) {

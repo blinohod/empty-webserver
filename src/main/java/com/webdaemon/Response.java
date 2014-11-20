@@ -6,7 +6,7 @@ public class Response {
 
 	private int status = 200;
 	private Hashtable<String, String> headers = new Hashtable<String, String>();
-	private char[] body;
+	private byte[] body;
 		
 	public void setStatus(int status) {
 		this.status = status;
@@ -20,31 +20,36 @@ public class Response {
 		return "HTTP/1.0 " + this.getStatus() + " " + getStatusMessage();
 	}
 
+	public byte[] getBytes() {
+		String responseHeader = getStatusLine();
+		for(String name : headers.keySet())
+			responseHeader += "\r\n" +  name + ": " + headers.get(name);
+		responseHeader += "\r\n\r\n";
+		if(body == null)
+			body = new byte[0];
+		byte[] ret = new byte[responseHeader.getBytes().length + body.length];
+		System.arraycopy(responseHeader.getBytes(), 0, ret, 0, responseHeader.getBytes().length);
+		System.arraycopy(body, 0, ret, responseHeader.getBytes().length, body.length);
+		return ret;
+	}
+	
 	public void setHeader(String name, String value) {
 		this.headers.put(name, value);
 	}
 
-	public String getHeaderString() {
-		String headerString = "";
-		for ( String name : headers.keySet()) {
-			headerString += name + ": " + headers.get(name) + "\r\n";
-		}			
-		return headerString;
-	}
-
 	public void setBody(String bodyString) {
-		this.body = bodyString.toCharArray();
+		this.body = bodyString.getBytes();
 	}
 
-	public void setBody(char[] bodyChars) {
-        this.body = bodyChars;
+	public void setBody(byte[] bodyBytes) {
+        this.body = bodyBytes;
     }
 
     public String getHeader(String key) {
         return headers.get(key);
     }
 
-	public char[] getBodyChars() {
+	public byte[] getBodyBytes() {
 		return this.body;
 	}
 	

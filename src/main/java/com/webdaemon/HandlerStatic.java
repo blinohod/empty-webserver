@@ -3,6 +3,8 @@ package com.webdaemon;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class HandlerStatic implements HandlerAPI {
 
@@ -39,12 +41,9 @@ public class HandlerStatic implements HandlerAPI {
 		if (file.isFile()) {
 			response.setStatus(200);
 			try {
-				char[] content = new char[(int) file.length()];
-				FileReader reader = new FileReader(file);
-				int len = reader.read(content);
-				reader.close();
+
 				response.setHeader("Content-type", getContentType(filePath));
-				response.setBody(content);
+				response.setBody(Files.readAllBytes(Paths.get(filePath)));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

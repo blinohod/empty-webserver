@@ -42,14 +42,14 @@ public class HandlerViewLogsTest {
     public void setAuthorizedTest() {
         viewLogs.setAuthorized(response);
         assertEquals(200, response.getStatus());
-        assertArrayEquals("Authorized!!!".toCharArray(), response.getBodyChars());
+        assertTrue(new String(response.getBytes()).contains("Authorized!!!"));
     }
 
     @Test
     public void setUnAuthorizedTest() {
         viewLogs.setUnAuthorized(response);
         assertEquals(401, response.getStatus());
-        assertArrayEquals("Authentication required".toCharArray(), response.getBodyChars());
+        assertTrue(new String(response.getBytes()).contains("Authentication required"));
         assertEquals("Basic realm=\"empty_server\"", response.getHeader("WWW-Authenticate"));
     }
 
