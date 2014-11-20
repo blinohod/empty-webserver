@@ -86,4 +86,13 @@ public class RequestTest {
 		request.setBody("STRING");
 		assertEquals("STRING", request.getBody()); }
 
+	@Test
+	public void canFetchPostParams() throws Exception {
+		String[] headerLines = new String[] { "POST /some/path HTTP/1.0" };		
+		request.setBody("var1=data1&var2=val2");
+		request.parseHeader(headerLines);
+		request.parsePostParams(request.getBody());
+		assertTrue(request.hasPostParams());
+	}
+
 }

@@ -20,6 +20,7 @@ public class Request {
 
 	public Request() {
 		this.queryParams = new Hashtable<String, String>();
+		this.postParams = new Hashtable<String, String>();
 		this.headers = new Hashtable<String, String>();
 	}
 
@@ -56,11 +57,11 @@ public class Request {
 	}
 
     public String getHeader(String name) {
-		return this.headers.get(name);
+		return this.headers.get(name.toLowerCase());
 	}
 
 	public void setHeader(String name, String value) {
-		this.headers.put(name, value);
+		this.headers.put(name.toLowerCase(), value);
 	}
 
 	public void parseHeader(String[] lines) throws Exception {
@@ -84,6 +85,13 @@ public class Request {
 		}
 	}
 
+	public String getPostParam(String name) {
+		if (postParams.containsKey(name)) {
+			return postParams.get(name);
+		} else
+			return null;
+	}
+	
 	public String getQueryParam(String name) {
 		if (queryParams.containsKey(name)) {
 			return queryParams.get(name);
@@ -111,7 +119,7 @@ public class Request {
 	public void parseHeaderLine(String header) {
 		String parts[] = header.split("\\s*:\\s*", 2);
 		if (parts.length == 2)
-			this.headers.put(parts[0], parts[1]);
+			this.setHeader(parts[0], parts[1]);
 	}
 
 	public String getHeaderString() {
@@ -121,5 +129,25 @@ public class Request {
 		}
 		return headerString;
 	}
+	
+	public void parsePostParams(String post) throws UnsupportedEncodingException {
+		if (post == null || post.isEmpty())
+			return;
+		
+		String pairs[] = post.split("&");
+		for (String pair : pairs) {
+			String keyVal[] = pair.split("=", 2);
+			postParams.put(URLDecoder.decode(keyVal[0], "UTF-8"),
+					URLDecoder.decode(keyVal[1], "UTF-8"));
+		}
+	}
 
+	public boolean hasPostParams() {
+		return (postParams.size() > 0);
+	}
+	
+	public boolean hasQueryParams() {
+		return (queryParams.size() > 0);
+	}
+	
 }
