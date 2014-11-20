@@ -47,6 +47,8 @@ public class Request {
 	}
 	
 	public void parseRequestLine(String requestLine) throws Exception {
+        if (requestLine == null)
+            return;
 		Pattern p = Pattern.compile("^(CONNECT|DELETE|GET|HEAD|OPTIONS|POST|PUT|TRACE|PATCH)\\s+([^\\s]+)\\s+HTTP/(\\d.\\d)$");
 		Matcher m = p.matcher(requestLine);
 		if(m.find()) {
@@ -81,12 +83,22 @@ public class Request {
 	}
 	
 	public void parseRequestHeader(String header) {
-		if (header == null) return;
-		String headers[] = header.split("\\r\\n");
+		if (header == null)
+            return;
+        String headers[] = new String[2];
+        headers = header.split("\\r\\n");
+
+
 		for (String headerLine : headers) {
-			String parts[] = headerLine.split("\\s*:\\s*", 2);
-            if (parts.length == 2)
-			    this.headers.put(parts[0], parts[1]);
+            if (headerLine!=null) {
+
+                String parts[] = headerLine.split("\\s*:\\s*", 2);
+                if (parts[1] == null)
+                    parts[1] = "WhatIsTHisValue";
+                if (parts[0] == null)
+                    parts[0] = "WhatIsTHisKey";
+                this.headers.put(parts[0], parts[1]);
+            }
 		}
 	}
 

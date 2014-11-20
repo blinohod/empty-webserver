@@ -6,11 +6,10 @@ public class HandlerViewLogs implements HandlerAPI {
 
     private String credentials = "Basic " + Base64.getEncoder().encodeToString("admin:hunter2".getBytes());
 
+
 	@Override
 	public boolean handleAndStop(Request request, Response response) {
 
-
-		
 		if(request.getPath().equals("/logs") && request.getMethod().equals("GET")) {
 
             if(request.getHeader("Authorization") != null && request.getHeader("Authorization").contains(credentials)) {
