@@ -12,7 +12,8 @@ public class HandlerStack implements HandlerStackAPI {
 		handlers.add(new HandlerForm());
 		handlers.add(new HandlerRedirect());
 		handlers.add(new HandlerOptions());
-		handlers.add(new HandlerStatic());		
+        handlers.add(new HandlerParams());
+		handlers.add(new HandlerStatic());
 		handlers.add(new HandlerDefault()); // return final 404 if no handlers interested		
 	}
 
